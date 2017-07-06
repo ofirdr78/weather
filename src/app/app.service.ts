@@ -18,7 +18,6 @@ newData: any;
    getRequest():any {
      this.http.get("http://api.apixu.com/v1/current.json?key=3682dce3352d42d2a2d63402170607&q=Paris")
      .subscribe ((data :Response)=> {
-      console.log(data);
       this.newData = data;
       return this.newData;
     })

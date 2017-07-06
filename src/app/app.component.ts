@@ -13,8 +13,15 @@ export class AppComponent {
 
   }
 
-  get() {
-    console.log(this._appService.getRequest());
+  get() 
+{
+    let data: any;
+    let promise = new Promise((resolve, reject) => {
+      console.log("in promise...");
+      data = this._appService.getRequest();
+    }).then(() => {
+         console.log("in then...");
+         console.log(data);
+    });
   }
-  
 }
