@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AppService} from './app.service';
+import {Component} from '@angular/core';
+import {AppService} from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -9,20 +9,30 @@ import { AppService} from './app.service';
 export class AppComponent {
   title = 'app';
   city: string;
-  constructor(private _appService: AppService) {
+  data: any;
+
+  constructor(private appService: AppService) {
 
   }
 
-  get() 
-{
-    let data: any;
-    let promise = new Promise((resolve, reject) => {
-      console.log("in promise...");
-      data = this._appService.getRequest();
-      console.log("After getRequest...");
-    }).then(() => {
-         console.log("in then...");
-         console.log(data);
-    });
+  async get() {
+    // this.appService.getRequest()
+    //   .then(res => {
+    //     console.log(`AppComponent::get:: got response: ${res}`);
+    //     this.data = res.json();
+    //   })
+    //   .catch(err => {
+    //     console.error(`AppComponent::get:: errored with: ${err}`);
+    //   });
+
+    try {
+      const response = await this.appService.getRequest();
+      this.data = response.json();
+      console.log(`AppComponent::get:: got response: ${response}`);
+
+    } catch (ex) {
+      console.error(`AppComponent::get:: errored with: ${ex}`);
+    }
+
   }
 }
