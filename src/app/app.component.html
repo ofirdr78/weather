@@ -1,3 +1,25 @@
-<button (click)="get()"> Click</button>
-{{data.location.country}}
 
+<!--<input type=text (keypress)="eventHandler($event.keyCode)">-->
+
+<!--<input type="text" [(ngModel)]="inputCity" (keypress)="getCity(inputCity)">-->
+
+<input type="text" name="inputCity" [(ngModel)]="inputCity" (ngModelChange)="getCity(inputCity)">
+
+<button class="searchButton" (click)="get()"> Look for weather...</button>
+<br>
+<br>
+
+<!--<select class="optionbox">
+<option *ngFor="let option of options"> {{option.structured_formatting.main_text}} </option></select>-->
+Did you mean...?
+<br>
+<br>
+
+<select [(ngModel)]="selectedValue" class="optionbox">
+     <option *ngFor="let option of options; let i = index" value={{i}}>{{option.structured_formatting.main_text}}</option>
+</select>
+
+<div class="result">
+{{fullTemperatureText}} 
+<img *ngIf="weatherIcon != ''"[src]="weatherIcon"/>
+</div>
