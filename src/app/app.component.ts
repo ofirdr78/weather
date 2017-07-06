@@ -19,6 +19,7 @@ export class AppComponent {
     let promise = new Promise((resolve, reject) => {
       console.log("in promise...");
       data = this._appService.getRequest();
+      console.log("After getRequest...");
     }).then(() => {
          console.log("in then...");
          console.log(data);
