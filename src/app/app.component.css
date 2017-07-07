@@ -21,7 +21,7 @@
 
 .firstLine
 {
-    text-shadow: 5px 5px gray;
+    text-shadow: 4px 4px gray;
     position: absolute;
     top: 60px;
     left: 10px;
@@ -52,7 +52,7 @@
 
 .secondLine
 {
-    text-shadow: 5px 5px gray;
+    text-shadow: 4px 4px gray;
     position: absolute;
     top: 60px;
     left: 90px;

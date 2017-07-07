@@ -25,6 +25,8 @@ export class AppComponent {
   daySVG: string;
   showWeatherStats: boolean;
   dayNightText: string;
+  condition: string;
+  humidity: number;
 
 // key: AIzaSyB583Fudf19zT_aB9W6Wzsnt0NPZ0B8A7Y
 
@@ -39,6 +41,7 @@ export class AppComponent {
     this.cityNoSpaces = ''; 
     this.fullTemperatureText = '';
     this.showWeatherStats = false;
+  
   }
 
   async getCity(inputCity) {
@@ -76,6 +79,8 @@ export class AppComponent {
       this.resLocation = this.data.location.name;
       this.resCountry = this.data.location.country;
       this.resTemp = this.data.current.temp_c;
+      this.condition = this.data.current.condition.text.toLowerCase( );
+      this.humidity = this.data.current.humidity;
       this.fulltext();
        if (this.data.current.is_day) {
         this.daySVG = "/assets/sun.svg";
@@ -97,7 +102,9 @@ export class AppComponent {
  {
     try {
        this.dayNightText = "It is ";
-       this.fullTemperatureText = await `in ${this.resLocation}, ${this.resCountry}. The temperature is ${this.resTemp}\u00b0c.`;
+       this.fullTemperatureText = await `in ${this.resLocation}, ${this.resCountry}. The temperature is ${this.resTemp}\u00b0c 
+        with ${this.humidity}% humidity. `;
+       this.fullTemperatureText += await ` The condition is ${this.condition}.`;
     }
      catch (ex) {
       console.error(`AppComponent::get:: errored with: ${ex}`);
