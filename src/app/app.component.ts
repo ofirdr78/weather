@@ -19,10 +19,13 @@ export class AppComponent {
   foundLocation: boolean;
   fullTemperatureText: string;
   weatherIcon: string;
-  textAddition: string;
   options: string [];
   selectedValue: number;
   cityNoSpaces: string;
+  daySVG: string;
+  showWeatherStats: boolean;
+  dayNightText: string;
+
 // key: AIzaSyB583Fudf19zT_aB9W6Wzsnt0NPZ0B8A7Y
 
   constructor(private appService: AppService) {
@@ -35,11 +38,14 @@ export class AppComponent {
     this.selectedValue = 0;
     this.cityNoSpaces = ''; 
     this.fullTemperatureText = '';
-  
+    this.showWeatherStats = false;
   }
 
   async getCity(inputCity) {
      try {
+      this.fullTemperatureText = '';
+      this.dayNightText = '';
+      this.showWeatherStats = false;
       const cityResponse = await this.appService.getCity(inputCity);
       this.foundLocation = true;
       this.city = cityResponse.json();
@@ -70,10 +76,16 @@ export class AppComponent {
       this.resLocation = this.data.location.name;
       this.resCountry = this.data.location.country;
       this.resTemp = this.data.current.temp_c;
-      this.checkTemp(this.resTemp);
       this.fulltext();
+       if (this.data.current.is_day) {
+        this.daySVG = "/assets/sun.svg";
+      } else {
+          this.daySVG = "/assets/moon.svg";
+      }
+      this.showWeatherStats = true;
       this.inputCity = '';
-
+     
+    
 
     } catch (ex) {
       console.error(`AppComponent::get:: errored with: ${ex}`);
@@ -84,25 +96,12 @@ export class AppComponent {
    async fulltext()
  {
     try {
-       this.fullTemperatureText = await `The temperature today in ${this.resLocation}, ${this.resCountry} is ${this.resTemp}'C. ${this.textAddition}`;
+       this.dayNightText = "It is ";
+       this.fullTemperatureText = await `in ${this.resLocation}, ${this.resCountry}. The temperature is ${this.resTemp}\u00b0c.`;
     }
      catch (ex) {
       console.error(`AppComponent::get:: errored with: ${ex}`);
     }
  } 
 
-  checkTemp(temp) {
-    if (temp > 20) {
-      this.weatherIcon = "/assets/hot.png";
-      this.textAddition = "Hot like HELL!";
-      return;
-    }
-    if (temp > 5 ) {
-      this.weatherIcon = "/assets/cloud.png";
-      this.textAddition = "Nice weather indeed!";
-      return;
-    }
-    this.weatherIcon = "/assets/storm.png";
-    this.textAddition = "My balls became ice cubes!"
-  }
 }

@@ -28,8 +28,12 @@
      <option *ngFor="let option of options; let i = index" value={{i}}>{{option.structured_formatting.main_text}}</option>
 </select>-->
 
-<div class="fulltext">
-  <h1>{{fullTemperatureText}}</h1>
+<div>
+  <p class="firstLine">{{dayNightText}}</p>
+  <img *ngIf="showWeatherStats" [src]="daySVG" class="daynight"/>
+  <p class="secondLine">{{fullTemperatureText}}</p>
 </div>
+  
+  
 
-
+  
