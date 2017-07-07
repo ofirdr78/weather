@@ -3,23 +3,33 @@
 
 <!--<input type="text" [(ngModel)]="inputCity" (keypress)="getCity(inputCity)">-->
 
-<input type="text" name="inputCity" [(ngModel)]="inputCity" (ngModelChange)="getCity(inputCity)">
+<form>
+<input type="text" name="inputCity" [(ngModel)]="inputCity" (ngModelChange)="getCity(inputCity)" list="list" class="optionbox"
+ placeholder="Enter a city...">
+<datalist id="list" class="optionbox">   
+     <option *ngFor="let option of options; let i = index" value={{option.structured_formatting.main_text}}> </option>
+</datalist>
 
-<button class="searchButton" (click)="get()"> Look for weather...</button>
-<br>
+
+<img src="/assets/glass.svg" class="glass" (click)="get()"/>
+</form>
 <br>
 
+<div style="color: white;">
+
+</div>
 <!--<select class="optionbox">
 <option *ngFor="let option of options"> {{option.structured_formatting.main_text}} </option></select>-->
-Did you mean...?
+<!--Did you mean...?
 <br>
 <br>
 
 <select [(ngModel)]="selectedValue" class="optionbox">
      <option *ngFor="let option of options; let i = index" value={{i}}>{{option.structured_formatting.main_text}}</option>
-</select>
+</select>-->
 
-<div class="result">
-{{fullTemperatureText}} 
-<img *ngIf="weatherIcon != ''"[src]="weatherIcon"/>
+<div class="fulltext">
+  <h1>{{fullTemperatureText}}</h1>
 </div>
+
+

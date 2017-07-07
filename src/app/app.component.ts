@@ -22,6 +22,7 @@ export class AppComponent {
   textAddition: string;
   options: string [];
   selectedValue: number;
+  cityNoSpaces: string;
 // key: AIzaSyB583Fudf19zT_aB9W6Wzsnt0NPZ0B8A7Y
 
   constructor(private appService: AppService) {
@@ -32,7 +33,9 @@ export class AppComponent {
     this.foundLocation = false;
     this.weatherIcon = '';
     this.selectedValue = 0;
-
+    this.cityNoSpaces = ''; 
+    this.fullTemperatureText = '';
+  
   }
 
   async getCity(inputCity) {
@@ -43,7 +46,6 @@ export class AppComponent {
       console.log(`AppComponent::get:: got response: ${cityResponse}`);
       this.resCity = this.city.predictions[0].structured_formatting.main_text;
       this.options = this.city.predictions;
-  
 
     } catch (ex) {
       console.error(`AppComponent::get:: errored with: ${ex}`);
@@ -61,21 +63,33 @@ export class AppComponent {
     //   });
 
     try {
-      const response = await this.appService.getRequest(this.city.predictions[this.selectedValue].structured_formatting.main_text);
+      // const response = await this.appService.getRequest(this.city.predictions[this.selectedValue].structured_formatting.main_text);
+      const response = await this.appService.getRequest(this.inputCity);
       this.data = response.json();
       console.log(`AppComponent::get:: got response: ${response}`);
       this.resLocation = this.data.location.name;
       this.resCountry = this.data.location.country;
       this.resTemp = this.data.current.temp_c;
       this.checkTemp(this.resTemp);
-      this.fullTemperatureText = `The temperature today in ${this.resLocation}, ${this.resCountry} is ${this.resTemp}'C. ${this.textAddition}`;
-    
+      this.fulltext();
+      this.inputCity = '';
+
 
     } catch (ex) {
       console.error(`AppComponent::get:: errored with: ${ex}`);
     }
 
   }
+
+   async fulltext()
+ {
+    try {
+       this.fullTemperatureText = await `The temperature today in ${this.resLocation}, ${this.resCountry} is ${this.resTemp}'C. ${this.textAddition}`;
+    }
+     catch (ex) {
+      console.error(`AppComponent::get:: errored with: ${ex}`);
+    }
+ } 
 
   checkTemp(temp) {
     if (temp > 20) {
